@@ -3,3 +3,5 @@ transformers
 soundfile
 gTTS
 streamlit
+groq==<latest_version>  # Check for the latest version on PyPI
+
