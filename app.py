@@ -6,14 +6,9 @@ from groq import Groq
 from gtts import gTTS
 import tempfile
 from pydub import AudioSegment
-
-# Ensure you have pydub installed
-# pip install pydub
+from streamlit_audio_recorder import audio_recorder  # Import the audio recorder
 
 # Set your Groq API key here
-# os.environ["GROQ_API_KEY"] = "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"
-
-# Initialize Groq client with your API key
 client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
 # Load Whisper model and processor for audio transcription
@@ -55,19 +50,24 @@ def process_audio(audio_file_path):
 
 # Streamlit interface
 st.title("Voice-to-Voice Chatbot")
-st.write("Upload an MP3 file to interact with the chatbot.")
+st.write("Record audio to interact with the chatbot.")
 
-uploaded_file = st.file_uploader("Choose an MP3 file", type=["mp3"])
+# Record audio using the audio recorder
+audio_data = audio_recorder("record",  # label for the recorder
+                             button_label="Start Recording",
+                             stop_button_label="Stop Recording",
+                             audio_format="mp3")
 
-if uploaded_file is not None:
-    # Save uploaded file temporarily
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as tmp_file:
-        tmp_file.write(uploaded_file.read())
-        audio_path = tmp_file.name
+if audio_data is not None:
+    # Save recorded audio temporarily
+    audio_path = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
+    audio_path.write(audio_data)
+    audio_path.close()
 
     # Process the audio file
-    transcription, response_audio_path = process_audio(audio_path)
+    transcription, response_audio_path = process_audio(audio_path.name)
 
     # Display transcription and response audio
     st.write("Transcription:", transcription)
     st.audio(response_audio_path, format="audio/mp3")
+
