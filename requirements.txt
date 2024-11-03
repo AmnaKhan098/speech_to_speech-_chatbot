@@ -1,4 +1,4 @@
-torch==2.0.1  # or the version you need
+torch # or the version you need
 transformers
 soundfile
 gTTS
