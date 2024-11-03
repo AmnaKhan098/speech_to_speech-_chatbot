@@ -1,0 +1,5 @@
+torch  # This will install the CPU version of PyTorch by default
+transformers
+soundfile
+gTTS
+streamlit
