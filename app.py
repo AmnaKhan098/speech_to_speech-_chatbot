@@ -14,7 +14,7 @@ from pydub import AudioSegment
 # os.environ["GROQ_API_KEY"] = "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"
 
 # Initialize Groq client with your API key
-client = Groq(api_key=st.secrets("GROQ_API_KEY"))
+client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
 # Load Whisper model and processor for audio transcription
 whisper_processor = WhisperProcessor.from_pretrained("openai/whisper-large")
