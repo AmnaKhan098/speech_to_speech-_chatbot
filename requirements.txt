@@ -5,5 +5,5 @@ gTTS
 streamlit
 groq
 pydub
-streamlit-audio-recorder
+
 
